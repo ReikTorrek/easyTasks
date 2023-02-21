@@ -12,14 +12,11 @@
 <body>
 <a href="../index.html">На главную</a>
 <?php
-$array = [];
 $colSumm = [];
 //Заполняем массив
-for ($i = 0; $i < 5; $i ++) {
-    for ($j = 0; $j < 7; $j ++) {
-        $array[$i][$j] = rand(1, 1000);
-    }
-}
+$array = [];
+$array = setArray();
+$array = setResultArray($array);
 ?>
 <table class="matrix">
     <tbody>
@@ -51,3 +48,30 @@ foreach ($colSumm as $value) {
 ?>
 </body>
 </html>
+
+<?php
+function setArray() {
+    $max_num = 1000;
+    $num_count = 35;
+
+    $array = [];
+
+    while (count($array) < $num_count) {
+        $r = rand(0, $max_num);
+        $array[$r] = 1;
+    }
+
+    return array_keys($array);
+}
+
+function setResultArray($array) {
+    $result = array();
+    $counter = 0;
+    foreach ($array as $value) {
+        $result[$counter][] = $value;
+        if (count($result[$counter]) == 7) {
+            $counter ++;
+        }
+    }
+    return $result;
+}
