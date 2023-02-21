@@ -1,7 +1,8 @@
 $(document).ready(function () {
     $('#front').click(function () {
         let city = $('#city').val()
-        let number = getNum(city);
+        let number = getNum(city); //Можно было бы и без функции, и можно получать значение в самой функции.
+        //Накостылировал, конечно...
         window.location.href = 'pages/front.php?num=' + number;
     })
 

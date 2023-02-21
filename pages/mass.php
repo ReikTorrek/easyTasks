@@ -14,15 +14,17 @@
 <?php
 $array = [];
 $colSumm = [];
+//Заполняем массив
 for ($i = 0; $i < 5; $i ++) {
     for ($j = 0; $j < 7; $j ++) {
         $array[$i][$j] = rand(1, 1000);
     }
 }
 ?>
-<table class="iksweb">
+<table class="matrix">
     <tbody>
 <?php
+//Начинаем вывод матрицы и суммы по строкам
 for ($i = 0; $i < count($array); $i ++) {
 ?>
 <tr>
@@ -42,6 +44,7 @@ for ($i = 0; $i < count($array); $i ++) {
     </tbody>
 </table>
 <?php
+//Чтобы не делать множество проверок - вторым циклом выводим сумму по столбцам
 foreach ($colSumm as $value) {
     echo '<span class="rotated"> Сумма столбца: ' . $value . '</span>';
 }
