@@ -1,7 +1,7 @@
 $(document).ready(function () {
     let num = getUrlParameter('num');
     let phone = $('h1');
-    
+
     phone.each(function () {
         let phoneVal = $(this).text();
         phone.text(phoneVal.replaceAll('DIGITS', num))

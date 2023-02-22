@@ -57,7 +57,7 @@ function setArray() {
     $array = [];
 
     while (count($array) < $num_count) {
-        $r = rand(0, $max_num);
+        $r = rand(1, $max_num);
         $array[$r] = 1;
     }
 
