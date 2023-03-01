@@ -1,16 +1,29 @@
 <?php
 require_once 'layout/header.html';
-$colSumm = [];
-//Заполняем массив
-$array = [];
-$array = setArray();
-$array = setResultArray($array);
-
-for ($i = 0; $i < count($array); $i ++) {
-    for ($j = 0; $j < count($array[$i]); $j ++) {
+/*
+ * После замера времени выполнения и 10 прогонов:
+ * 1. На маленьких размерах массивов скорость выполнения одинаковая.
+ * 2. На массивах размером в 1000000 элементов и без обрезки скорость этого варианта выше ~в 3 раза.
+ * 3. Если обрезать массивы, то первый вариант всё равно оптимальнее, так как проходит всего 35 итераций,
+ * в то время как этот проходит в любом случае END итераций.
+ */
+const START = 1;
+const END = 1000;
+const ROW_LENGTH = 7;
+const ARRAY_LENGTH = 5;
+$colSum = [];
+$array = range(START, END); //Заполняем массив
+shuffle($array); //Перемешиваем
+$array = array_chunk($array, ROW_LENGTH); //Делаем многомерным
+$array = array_slice($array, 0, ARRAY_LENGTH); // Обрезаем лишнее
+//В теории, у меня была мысль, что можно сделать это через
+// foreach($array as $arrayKey => $arrayValue) {foreach($value as $key => $value){...}}
+//Но думаю, что раз массив не ассоциативный, это излишне.
+for ($i = 0; $i < ARRAY_LENGTH; $i ++) {
+    for ($j = 0; $j < ROW_LENGTH; $j ++) {
         echo $array[$i][$j] . PHP_EOL;
-        if (count($colSumm) < count($array[$i])) {
-            $colSumm[] += array_sum(array_column($array, $j));
+        if (count($colSum) < ROW_LENGTH) {
+            $colSum[] += array_sum(array_column($array, $j));
         }
     }
     echo ' || ' . array_sum($array[$i]);
@@ -18,34 +31,8 @@ for ($i = 0; $i < count($array); $i ++) {
 }
 echo '//////////////////////////////////////////////////////////////<br>';
 //Чтобы не делать множество проверок - вторым циклом выводим сумму по столбцам
-foreach ($colSumm as $value) {
+foreach ($colSum as $value) {
     echo $value . PHP_EOL;
-}
-
-function setArray() {
-    $max_num = 1000;
-    $num_count = 35;
-
-    $array = [];
-
-    while (count($array) < $num_count) {
-        $r = rand(1, $max_num);
-        $array[$r] = 1;
-    }
-
-    return array_keys($array);
-}
-
-function setResultArray($array) {
-    $result = array();
-    $counter = 0;
-    foreach ($array as $value) {
-        $result[$counter][] = $value;
-        if (count($result[$counter]) == 7) {
-            $counter ++;
-        }
-    }
-    return $result;
 }
 
 require_once 'layout/footer.html';
